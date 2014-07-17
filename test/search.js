@@ -11,6 +11,18 @@ describe('collection.find()', function () {
     })
   })
 
+  it('(ObjectID)', function () {
+    var doc = {
+      qwer: 1
+    }
+    return collection.insert(doc).then(function (doc) {
+      assert(doc._id)
+      return collection.findOne(doc._id)
+    }).then(function (res) {
+      assert(res._id.equals(doc._id))
+    })
+  })
+
   it('(key, value)', function () {
     return collection.find('name', 'jon').then(function (docs) {
       assert(docs.length)
