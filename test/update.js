@@ -105,6 +105,26 @@ describe('.find().update().new()', function () {
       assert.equal(1, count)
     })
   })
+
+  it('.map()', function () {
+    return collection.find({
+      name: 'taylor'
+    }).update({
+      $set: {
+        value: 102
+      }
+    }).new().map(function (x) {
+      x.transformed = true
+      return x
+    }).then(function (doc) {
+      assert.equal('taylor', doc.name)
+      assert.equal(102, doc.value)
+      assert(doc.transformed)
+      return collection.find('name', 'taylor').count()
+    }).then(function (count) {
+      assert.equal(1, count)
+    })
+  })
 })
 
 describe('.find().update().remove()', function () {
