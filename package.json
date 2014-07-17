@@ -1,7 +1,7 @@
 {
   "name": "mongodb-next",
   "description": "A fluent Promise and Streams2 MongoDB API wrapper",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": {
     "name": "Jonathan Ong",
     "email": "me@jongleberry.com",
@@ -13,7 +13,6 @@
   "dependencies": {
     "bluebird": "2",
     "native-or-bluebird": "1",
-
     "stream-to-array": "2",
     "aggregate-stream": "1"
   },
