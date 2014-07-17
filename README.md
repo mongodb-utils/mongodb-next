@@ -178,9 +178,9 @@ collection
 
 [npm-image]: https://img.shields.io/npm/v/mongodb-next.svg?style=flat
 [npm-url]: https://npmjs.org/package/mongodb-next
-[travis-image]: https://img.shields.io/travis/jonathanong/mongodb-next.svg?style=flat
-[travis-url]: https://travis-ci.org/jonathanong/mongodb-next
-[coveralls-image]: https://img.shields.io/coveralls/jonathanong/mongodb-next.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/jonathanong/mongodb-next?branch=master
+[travis-image]: https://img.shields.io/travis/mongodb-utils/mongodb-next.svg?style=flat
+[travis-url]: https://travis-ci.org/mongodb-utils/mongodb-next
+[coveralls-image]: https://img.shields.io/coveralls/mongodb-utils/mongodb-next.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/mongodb-utils/mongodb-next?branch=master
 [gittip-image]: https://img.shields.io/gittip/jonathanong.svg?style=flat
 [gittip-url]: https://www.gittip.com/jonathanong/
