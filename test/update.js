@@ -157,3 +157,65 @@ describe('.find().new().update()', function () {
     })
   })
 })
+
+describe('.find().inc()', function () {
+  it('(key)', function () {
+    return collection.find('name', 'taylor').inc('qqqq').then(function () {
+      return collection.findOne('name', 'taylor')
+    }).then(function (doc) {
+      assert.equal(2, doc.qqqq)
+    })
+  })
+
+  it('(key, number)', function () {
+    return collection.find('name', 'taylor').inc('qqqq', 5).then(function () {
+      return collection.findOne('name', 'taylor')
+    }).then(function (doc) {
+      assert.equal(7, doc.qqqq)
+    })
+  })
+})
+
+describe('.find().unset()', function () {
+  it('(field)', function () {
+    return collection.insert({
+      id: 'asdf',
+      a: 1,
+      b: 1,
+      c: 1,
+      d: 1
+    }).then(function () {
+      return collection.find('id', 'asdf').unset('d').new()
+    }).then(function (doc) {
+      assert(!('d' in doc))
+      return collection.findOne('id', 'asdf')
+    }).then(function (doc) {
+      assert(doc)
+      assert(!('d' in doc))
+      return collection.findOne('id', 'asdf')
+    })
+  })
+
+  it('(fields...)', function () {
+    return collection.insert({
+      id: 'asdf',
+      a: 1,
+      b: 1,
+      c: 1,
+      d: 1
+    }).then(function () {
+      return collection.find('id', 'asdf').unset('a', 'b', 'c').new()
+    }).then(function (doc) {
+      assert(!('a' in doc))
+      assert(!('b' in doc))
+      assert(!('c' in doc))
+      return collection.findOne('id', 'asdf')
+    }).then(function (doc) {
+      assert(doc)
+      assert(!('a' in doc))
+      assert(!('b' in doc))
+      assert(!('c' in doc))
+      return collection.findOne('id', 'asdf')
+    })
+  })
+})
