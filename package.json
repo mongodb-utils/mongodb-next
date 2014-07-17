@@ -1,0 +1,41 @@
+{
+  "name": "mongodb-next",
+  "description": "A fluent Promise and Streams2 MongoDB API wrapper",
+  "version": "0.0.0",
+  "author": {
+    "name": "Jonathan Ong",
+    "email": "me@jongleberry.com",
+    "url": "http://jongleberry.com",
+    "twitter": "https://twitter.com/jongleberry"
+  },
+  "license": "MIT",
+  "repository": "jonathanong/mongodb-next",
+  "dependencies": {
+    "bluebird": "2",
+    "native-or-bluebird": "1",
+
+    "stream-to-array": "2",
+    "aggregate-stream": "1"
+  },
+  "devDependencies": {
+    "mocha": "1",
+    "mongodb": "1",
+    "istanbul": "0"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec test/index.js",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/index.js",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/index.js"
+  },
+  "main": "lib",
+  "keywords": [
+    "mongodb",
+    "es6",
+    "query",
+    "builder",
+    "promises",
+    "then",
+    "wrapper",
+    "fluent"
+  ]
+}
