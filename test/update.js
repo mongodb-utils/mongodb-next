@@ -138,3 +138,22 @@ describe('.find().update().remove()', function () {
     })
   })
 })
+
+describe('.find().new().update()', function () {
+  // order matters
+  it('(document)', function () {
+    return collection.find({
+      name: 'taylor'
+    }).new().update({
+      $set: {
+        qqqq: 1
+      }
+    }).then(function (doc) {
+      assert.equal('taylor', doc.name)
+      assert.equal(1, doc.qqqq)
+      return collection.find('name', 'taylor').find('qqqq', 1).count()
+    }).then(function (count) {
+      assert.equal(1, count)
+    })
+  })
+})
