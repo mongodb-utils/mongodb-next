@@ -11,7 +11,7 @@ A MongoDB API wrapper with:
 - A fluent, chaining API
 - Promise support
 - Streams2 support
-- Batched write support
+- Bulk write support
 
 All methods return promises, so your code now looks like this:
 
