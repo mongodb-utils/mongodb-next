@@ -38,6 +38,14 @@ describe('.aggregate()', function () {
     })
   })
 
+  it('.match().end()', function (done) {
+    collection.aggregate().match(match).end(function (err, docs) {
+      assert.ifError(err)
+      assert.equal(3, docs.length)
+      done()
+    })
+  })
+
   it('.match().toArray()', function (done) {
     collection.aggregate().match(match).toArray(function (err, docs) {
       assert.ifError(err)
