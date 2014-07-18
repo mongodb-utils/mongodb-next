@@ -58,6 +58,15 @@ I expressed my interest in creating a well defined API, and this is
 what I consider ideal. As Christian is [refactoring the driver](https://github.com/christkv/mongodb-core),
 this may, in the future, be an alternative API.
 
+## Compatibility
+
+This library uses promises extensively. Currently, it uses [bluebird](https://github.com/petkaantonov/bluebird),
+but it will eventually switch to native promises.
+
+This library also only supports MongoDB 2.6+, but most commands will
+still work with MongoDB 2.4 and any MongoDB driver that shims
+various 2.6 commands for 2.4.
+
 ## API
 
 ```js
