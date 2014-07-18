@@ -59,6 +59,20 @@ describe('.find().updateOne()', function () {
   })
 })
 
+describe('.findOne().update()', function () {
+  it('.set()', function () {
+    return collection.findOne().update().set('asdf', 5).then(function (doc) {
+      assert(!Array.isArray(doc))
+      return collection.find()
+    }).then(function (docs) {
+      assert(docs.length > 1)
+      assert.equal(1, docs.filter(function (x) {
+        return x.asdf === 5
+      }).length)
+    })
+  })
+})
+
 describe('.find().upsert()', function () {
   it('(document)', function () {
     return collection.find({
