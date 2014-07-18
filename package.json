@@ -13,8 +13,7 @@
   "dependencies": {
     "bluebird": "2",
     "native-or-bluebird": "1",
-    "stream-to-array": "2",
-    "aggregate-stream": "1"
+    "stream-to-array": "2"
   },
   "devDependencies": {
     "mocha": "1",
