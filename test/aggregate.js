@@ -89,6 +89,19 @@ describe('.aggregate()', function () {
     })
   })
 
+  it('.map().map()', function () {
+    return collection.aggregate().match(match).map(transform).map(function (x) {
+      x.asdf = true
+      return x
+    }).then(function (docs) {
+      assert.equal(3, docs.length)
+      assert(transformed(docs))
+      assert(docs.every(function (doc) {
+        return doc.asdf
+      }))
+    })
+  })
+
   it('.setOption(obj)', function () {
     var query = collection.aggregate()
     var options = {}
