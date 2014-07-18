@@ -26,5 +26,6 @@ before(function (done) {
 require('./insert')
 require('./search')
 require('./update')
+require('./remove')
 require('./aggregate')
 require('./batch')

@@ -127,18 +127,6 @@ describe('.find().update().new()', function () {
   })
 })
 
-describe('.find().update().remove()', function () {
-  it('(document)', function () {
-    return collection.find({
-      name: 'taylor2'
-    }).remove().then(function () {
-      return collection.find('name', 'taylor2').count()
-    }).then(function (count) {
-      assert.equal(0, count)
-    })
-  })
-})
-
 describe('.find().new().update()', function () {
   // order matters
   it('(document)', function () {
