@@ -46,6 +46,18 @@ This is similar to [mquery](https://github.com/aheckmann/mquery),
 but has proper Promise/yieldable support and avoids long method names
 like `.findOneAndRemove()`. It's also much fewer lines of code.
 
+## Context
+
+[Christian](https://github.com/christkv),
+the maintainer of [node-mongodb-native](https://github.com/mongodb/node-mongodb-native),
+is interested in a version of the MongoDB driver that supports native promises
+as well as other ES6+ features. However, this won't remotely be a possibility
+until after v3.0 of the driver is out (we're still on v1).
+
+I expressed my interest in creating a well defined API, and this is
+what I consider ideal. As Christian is [refactoring the driver](https://github.com/christkv/mongodb-core),
+this may, in the future, be an alternative API.
+
 ## API
 
 ```js
@@ -71,9 +83,10 @@ Only a few methods are available on `collection` itself:
 - `.find()` - for searching or updating multiple documents
 - `.findOne()` - for searching or updating a single document
 - `.insert()` - for inserting documents
-- `.aggregate()` - for aggregations, see [aggregate-stream](https://github.com/mongodb-utils/aggregate-stream) for more details
-- `.batch()` - to create sequential batch writes
-- `.parallel()` - to create parallel batch writes
+- `.remove()` - remove documents, shortcut for `.find().remove()`
+- `.aggregate()` - for aggregations
+- `.batch()` - to create sequential bulk writes
+- `.parallel()` - to create parallel bulk writes
 
 The API is somewhat subject to change so they won't be documented thoroughly.
 If what you "expect" to work does not work, please let us know so we can
@@ -89,17 +102,23 @@ collection.insert({
 }).w('majority'))
 ```
 
-Update operators are also methods without the `$` prefix:
+Update operators are also methods with the `$` prefix as well as without
+if there are no conflicts:
 
 ```js
 collection.find({
   name: 'username'
 }).set('name', 'new_username').w('majority')
+
+// there's no .push() because that's a streams2 API method name
+collection.find({
+  name: 'username'
+}).$push('names', 'new_username')
 ```
 
 ### Promises
 
-All methods return a thenable.
+All methods have `.then()`.
 
 ```js
 collection.find().then(function (docs) {
@@ -115,7 +134,8 @@ However, `.then()` returns a proper Promise that you can `.then()` and `.catch()
 
 ### Streams
 
-The `.find()` method, when not used with any `.update()` commands, return a stream.
+The `.find()` method, when not used with any `.update()` or `.remove()` commands,
+returns a stream.
 
 ```js
 collection.find().pipe(JSONStream.stringify()).pipe(process.stdout)
@@ -123,12 +143,35 @@ collection.find().pipe(JSONStream.stringify()).pipe(process.stdout)
 
 ### Callbacks
 
-Callbacks are only supported using the `.exec()` command.
+Callbacks are only supported using the `.exec()` or `.end()` commands.
 
 ```js
-collection.find().exec(function (err, doc) {
+collection.find().end(function (err, doc) {
 
 })
+```
+
+### Transforms
+
+You may chain transforms, equivalent to `[].map()`:
+
+```js
+collection.find().map(function (x) {
+  x.transform1 = true
+  return x
+}).map(function (x) {
+  x.transform2 = true
+  return x
+})
+```
+
+### Options
+
+You may set options yourself using the `.setOption()` or `.setOptions()` methods:
+
+```js
+collection.find().setOptions({})
+collection.find().setOption('key', 'value')
 ```
 
 ## Examples
@@ -174,6 +217,33 @@ collection
 .find('species', 'human')
 .set('ancestor', 'neanderthal')
 .w('majority')
+```
+
+Do an aggregation:
+
+```js
+collection.aggregate()
+.match({
+  type: 'human'
+})
+.group({
+  _id: '$value',
+  count: {
+    $sum: 1
+  }
+})
+.limit(10)
+```
+
+Paginate:
+
+```js
+function query(options) {
+  options = options || {}
+  collection.find()
+  .skip(options.skip || 0)
+  .limit(options.limit || 25)
+}
 ```
 
 [npm-image]: https://img.shields.io/npm/v/mongodb-next.svg?style=flat
