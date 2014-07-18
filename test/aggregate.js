@@ -77,7 +77,9 @@ describe('.aggregate()', function () {
   })
 
   it('.explain()', function () {
-    return collection.aggregate().match(match).group(byValue).explain()
+    return collection.aggregate().match(match).group(byValue).explain().then(function (doc) {
+      assert(doc[0].$cursor)
+    })
   })
 
   it('.map()', function () {
@@ -85,6 +87,19 @@ describe('.aggregate()', function () {
       assert.equal(3, docs.length)
       assert(transformed(docs))
     })
+  })
+
+  it('.setOption(obj)', function () {
+    var query = collection.aggregate()
+    var options = {}
+    query.setOptions(options)
+    assert.equal(query.options, options)
+  })
+
+  it('.setOption(key, value)', function () {
+    var query = collection.aggregate()
+    query.setOption('a', true)
+    assert.equal(query.options.a, true)
   })
 })
 

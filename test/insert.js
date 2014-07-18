@@ -24,6 +24,19 @@ describe('collection.insert()', function () {
     })
   })
 
+  it('.setOption(obj)', function () {
+    var query = collection.insert()
+    var options = {}
+    query.setOptions(options)
+    assert.equal(query.options, options)
+  })
+
+  it('.setOption(key, value)', function () {
+    var query = collection.insert()
+    query.setOption('a', true)
+    assert.equal(query.options.a, true)
+  })
+
   it('.exec()', function (done) {
     collection.insert({
       something: 'asdf'

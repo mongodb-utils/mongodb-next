@@ -32,6 +32,19 @@ describe('collection.find()', function () {
     })
   })
 
+  it('.setOption(obj)', function () {
+    var query = collection.find()
+    var options = {}
+    query.setOptions(options)
+    assert.equal(query.options, options)
+  })
+
+  it('.setOption(key, value)', function () {
+    var query = collection.find()
+    query.setOption('a', true)
+    assert.equal(query.options.a, true)
+  })
+
   it('.pipe()', function (done) {
     var stream = collection.find()
     var value = false
