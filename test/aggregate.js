@@ -114,6 +114,18 @@ describe('.aggregate()', function () {
     query.setOption('a', true)
     assert.equal(query.options.a, true)
   })
+
+  it('.readPreference()', function () {
+    var query = collection.aggregate()
+    query.readPreference('secondaryPreferred')
+    assert.equal('secondaryPreferred', query.options.readPreference)
+  })
+
+  it('.batchSize()', function () {
+    var query = collection.aggregate()
+    query.batchSize(1)
+    assert.equal(1, query.options.cursor.batchSize)
+  })
 })
 
 function noop() {}
