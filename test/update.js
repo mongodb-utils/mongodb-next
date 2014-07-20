@@ -5,7 +5,8 @@ describe('.find().update()', function () {
       $set: {
         asdf: 1
       }
-    }).then(function () {
+    }).then(function (count) {
+      assert('number', typeof count)
       return collection.find()
     }).then(function (docs) {
       assert(docs.length > 1)
@@ -18,7 +19,8 @@ describe('.find().update()', function () {
   it('(key, value)', function () {
     return collection.find().update('$set', {
       asdf: 2
-    }).then(function () {
+    }).then(function (count) {
+      assert('number', typeof count)
       return collection.find()
     }).then(function (docs) {
       assert(docs.length > 1)
