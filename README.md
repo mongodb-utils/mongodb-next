@@ -38,7 +38,7 @@ co(function* () {
   batch.insert({b: 2})
   yield batch
   var doc = yield collection.findOne('a', 1).readPreference('secondaryPreferred')
-  var doc2 = collection.find(doc._id).updateOne('a', 2).w('majory').new()
+  var doc2 = yield collection.find(doc._id).updateOne('a', 2).w('majory').new()
 })()
 ```
 
