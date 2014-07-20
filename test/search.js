@@ -150,6 +150,19 @@ describe('collection.find()', function () {
       assert.equal(2, count)
     })
   })
+
+  it('.skip()', function () {
+    return collection.find().skip().then(function (docs) {
+      var length = docs.length
+      assert(length)
+      return collection.find().skip(null).then(function (docs) {
+        assert.equal(length, docs.length)
+        return collection.find().skip(1).then(function (docs) {
+          assert(length - 1, docs.length)
+        })
+      })
+    })
+  })
 })
 
 describe('collection.findOne()', function () {
