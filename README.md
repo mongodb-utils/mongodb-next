@@ -8,10 +8,14 @@
 
 A MongoDB API wrapper with:
 
-- A fluent, chaining API
+- A fluent, chaining API without traditional MongoDB drivers and wrappers' function varity and long names
+- Streams2 support with proper `.destroy()` calls
 - Promise support
-- Streams2 support
-- Bulk write support
+  - Currently uses bluebird, but switching to native promises simply requires removing 2 dependencies
+- MongoDB 2.6+ support
+  - Aggregation framework support
+  - Bulk write support
+  - Tests currently fail on Travis because Travis uses MongoDB 2.4
 
 All methods return promises, so your code now looks like this:
 
@@ -41,10 +45,6 @@ co(function* () {
   var doc2 = yield collection.find(doc._id).updateOne('a', 2).w('majory').new()
 })()
 ```
-
-This is similar to [mquery](https://github.com/aheckmann/mquery),
-but has proper Promise/yieldable support and avoids long method names
-like `.findOneAndRemove()`. It's also much fewer lines of code.
 
 ## Context
 
