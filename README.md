@@ -127,7 +127,7 @@ collection.find({
 
 ### Promises
 
-All methods have `.then()`.
+All methods have `.then()` and `.catch()`.
 
 ```js
 collection.find().then(function (docs) {
@@ -136,10 +136,6 @@ collection.find().then(function (docs) {
 
 })
 ```
-
-These are __NOT__ real promise implementations, just a `.then()` method.
-In other words, there is no `.catch()` or `.finally()` method you can use.
-However, `.then()` returns a proper Promise that you can `.then()` and `.catch()`.
 
 ### Streams
 
