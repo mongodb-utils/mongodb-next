@@ -62,6 +62,18 @@ describe('.find().updateOne()', function () {
 })
 
 describe('.findOne().update()', function () {
+  it('(ObjectID)', function () {
+    return collection.find().then(function (docs) {
+      return Promise.all(docs.map(function (doc) {
+        var _id = doc._id
+        return collection.findOne(_id).set('_id2', _id).new().then(function (doc) {
+          assert(_id.equals(doc._id))
+          assert(_id.equals(doc._id2))
+        })
+      }))
+    })
+  })
+
   it('.set()', function () {
     return collection.findOne().update().set('asdf', 5).then(function (doc) {
       assert(!Array.isArray(doc))
