@@ -30,6 +30,19 @@ describe('.find().update()', function () {
     })
   })
 
+  it('.set(obj)', function () {
+    return collection.find().set({
+      obj: true
+    }).then(function () {
+      return collection.find()
+    }).then(function (docs) {
+      assert(docs.length > 1)
+      assert(docs.every(function (doc) {
+        return doc.obj = true
+      }))
+    })
+  })
+
   it('.set(key, value)', function () {
     return collection.find().set('asdf', 3).then(function () {
       return collection.find()
@@ -188,6 +201,16 @@ describe('.find().inc()', function () {
       return collection.findOne('name', 'taylor')
     }).then(function (doc) {
       assert.equal(7, doc.qqqq)
+    })
+  })
+
+  it('(obj)', function () {
+    return collection.find('name', 'taylor').inc({
+      qqqq: 1
+    }).then(function () {
+      return collection.findOne('name', 'taylor')
+    }).then(function (doc) {
+      assert.equal(8, doc.qqqq)
     })
   })
 })
