@@ -9,7 +9,7 @@
     "twitter": "https://twitter.com/jongleberry"
   },
   "license": "MIT",
-  "repository": "jonathanong/mongodb-next",
+  "repository": "mongodb-utils/mongodb-next",
   "dependencies": {
     "bluebird": "2",
     "native-or-bluebird": "1",
