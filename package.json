@@ -26,6 +26,7 @@
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/index.js"
   },
   "main": "lib",
+  "files": ["lib"],
   "keywords": [
     "mongodb",
     "es6",
