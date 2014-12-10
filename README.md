@@ -2,8 +2,11 @@
 # mongodb-next
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
+[![Build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
+[![Dependency Status][david-image]][david-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 [![Gittip][gittip-image]][gittip-url]
 
 A MongoDB API wrapper with:
@@ -11,11 +14,12 @@ A MongoDB API wrapper with:
 - A fluent, chaining API without traditional MongoDB drivers and wrappers' function varity and long names
 - Streams2 support with proper `.destroy()` calls
 - Promise support
-  - Currently uses bluebird, but switching to native promises simply requires removing 2 dependencies
+- Supports `node-mongodb-native` `v1` as well as `v2`.
 - MongoDB 2.6+ support
   - Aggregation framework support
   - Bulk write support
-  - Tests currently fail on Travis because Travis uses MongoDB 2.4
+
+> Note: tests currently fail on Travis because Travis uses MongoDB 2.4
 
 All methods return promises, so your code now looks like this:
 
@@ -24,12 +28,12 @@ var wrap = require('mongodb-next').collection
 var collection = wrap(db.collection('test'))
 
 var batch = collection.batch() // ordered batched writes
-batch.insert({a: 1})
-batch.insert({b: 2})
+batch.insert({ a: 1 })
+batch.insert({ b: 2 })
 batch.then(function () {
   return collection.findOne('a', 1).readPreference('secondaryPreferred')
 }).then(function (doc) {
-  return collection.find(doc._id).updateOne('a', 2).w('majory')
+  return collection.findOne(doc._id).update('a', 2).w('majory')
 })
 ```
 
@@ -55,11 +59,25 @@ co(function* () {
 the maintainer of [node-mongodb-native](https://github.com/mongodb/node-mongodb-native),
 is interested in a version of the MongoDB driver that supports native promises
 as well as other ES6+ features. However, this won't remotely be a possibility
-until after v3.0 of the driver is out (we're still on v1).
+until after v3.0 of the driver is out.
 
 I expressed my interest in creating a well defined API, and this is
 what I consider ideal. As Christian is [refactoring the driver](https://github.com/christkv/mongodb-core),
 this may, in the future, be an alternative API.
+The goal is for this API to last past ES7, where code will look like:
+
+```js
+async function run() {
+  var docs = await collection.find({
+    name: 'jon'
+  })
+}
+
+run.catch(function (err) {
+  console.error(err.stack)
+  process.exit(1)
+})
+```
 
 ## Compatibility
 
@@ -69,6 +87,8 @@ but it will eventually switch to native promises.
 This library also only supports MongoDB 2.6+, but most commands will
 still work with MongoDB 2.4 and any MongoDB driver that shims
 various 2.6 commands for 2.4.
+
+This library supports `node-mongodb-native@1` as well as `@2`.
 
 ## API
 
@@ -130,13 +150,23 @@ collection.find({
 
 ### Promises
 
-All methods have `.then()` and `.catch()`.
+All methods have `.then()` and `.catch()`,
+allowing them to be `yield` or `await`ed.
 
 ```js
 collection.find().then(function (docs) {
 
 }, function (err) {
 
+})
+
+co(function* () {
+  var docs = yield collection.find({
+    name: 'jon'
+  })
+}).catch(function (err) {
+  console.error(err.stack)
+  process.exit(1)
 })
 ```
 
@@ -254,11 +284,21 @@ function query(options) {
 }
 ```
 
-[npm-image]: https://img.shields.io/npm/v/mongodb-next.svg?style=flat
+[gitter-image]: https://badges.gitter.im/mongodb-utils/mongodb-next.png
+[gitter-url]: https://gitter.im/mongodb-utils/mongodb-next
+[npm-image]: https://img.shields.io/npm/v/mongodb-next.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/mongodb-next
-[travis-image]: https://img.shields.io/travis/mongodb-utils/mongodb-next.svg?style=flat
+[github-tag]: http://img.shields.io/github/tag/mongodb-utils/mongodb-next.svg?style=flat-square
+[github-url]: https://github.com/mongodb-utils/mongodb-next/tags
+[travis-image]: https://img.shields.io/travis/mongodb-utils/mongodb-next.svg?style=flat-square
 [travis-url]: https://travis-ci.org/mongodb-utils/mongodb-next
-[coveralls-image]: https://img.shields.io/coveralls/mongodb-utils/mongodb-next.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/mongodb-utils/mongodb-next?branch=master
-[gittip-image]: https://img.shields.io/gittip/jonathanong.svg?style=flat
-[gittip-url]: https://www.gittip.com/jonathanong/
+[coveralls-image]: https://img.shields.io/coveralls/mongodb-utils/mongodb-next.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/mongodb-utils/mongodb-next
+[david-image]: http://img.shields.io/david/mongodb-utils/mongodb-next.svg?style=flat-square
+[david-url]: https://david-dm.org/mongodb-utils/mongodb-next
+[license-image]: http://img.shields.io/npm/l/mongodb-next.svg?style=flat-square
+[license-url]: LICENSE
+[downloads-image]: http://img.shields.io/npm/dm/mongodb-next.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/mongodb-next
+[gittip-image]: https://img.shields.io/gratipay/jonathanong.svg?style=flat-square
+[gittip-url]: https://gratipay.com/jonathanong/
