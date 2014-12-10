@@ -43,7 +43,10 @@ co(function* () {
   yield batch
   var doc = yield collection.findOne('a', 1).readPreference('secondaryPreferred')
   var doc2 = yield collection.find(doc._id).updateOne('a', 2).w('majory').new()
-})()
+}).catch(function (err) {
+  console.error(err.stack)
+  process.exit(1)
+})
 ```
 
 ## Context
