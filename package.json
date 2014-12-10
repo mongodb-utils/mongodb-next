@@ -11,12 +11,12 @@
   "license": "MIT",
   "repository": "mongodb-utils/mongodb-next",
   "dependencies": {
-    "bluebird": "2",
     "native-or-bluebird": "1",
     "stream-to-array": "2"
   },
   "devDependencies": {
-    "mocha": "1",
+    "bluebird": "2",
+    "mocha": "2",
     "mongodb": "1",
     "istanbul": "0"
   },
