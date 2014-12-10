@@ -11,6 +11,7 @@
   "license": "MIT",
   "repository": "mongodb-utils/mongodb-next",
   "dependencies": {
+    "memorizer": "^1.0.0",
     "native-or-bluebird": "1",
     "stream-to-array": "2"
   },
@@ -26,7 +27,9 @@
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/index.js"
   },
   "main": "lib",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "mongodb",
     "es6",
