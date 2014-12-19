@@ -1,7 +1,7 @@
 
 describe('.batch()', function () {
   it('.then()', function (done) {
-    var batch = collection.batch()
+    var batch = collection2.batch()
     batch.insert({
       v: 1
     })
@@ -16,7 +16,7 @@ describe('.batch()', function () {
 
 describe('.parallel()', function () {
   it('.then()', function (done) {
-    var batch = collection.parallel()
+    var batch = collection2.parallel()
     batch.insert({
       v: 1
     })

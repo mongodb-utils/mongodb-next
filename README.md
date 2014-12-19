@@ -37,6 +37,23 @@ batch.then(function () {
 })
 ```
 
+Or the new way:
+
+```js
+var DB = require('mongodb-next');
+var db = DB('mongodb://localhost/test', {
+  w: 'majority'
+});
+
+db.connect.then(function () {
+  db.collection('things').find({
+    name: 'jon'
+  }).then(function (things) {
+    console.log(things)
+  })
+})
+```
+
 Or if you use something like [co](https://github.com/visionmedia/co):
 
 ```js
@@ -93,19 +110,42 @@ This library supports `node-mongodb-native@1` as well as `@2`.
 ## API
 
 ```js
-var wrap = require('mongodb-next').collection
+var DB = require('mongodb-next');
 ```
 
-For now, this module only wraps MongoDB collections,
-meaning you still need the `mongodb` library to connect to your
-database and such.
+### var db = DB(uri, [options])
+
+Create a new db instance from a URI w/ options.
+A wrapper around `MongoClient.connect()`
+
+### db.connect.then( => )
+
+Wait until the database is connected.
+Use this before doing any subsequent commands.
+
+### db.raw
+
+The raw database connection provided by MongoDB.
 
 ### wrap(collection)
 
 The primary constructor wraps a MongoDB Collection.
+This is the same as doing `db.collection(name)`.
 
 ```js
+var wrap = require('mongodb-next').collection
 var collection = wrap(db.collection('test'))
+
+// or
+var db = DB('mongodb://localhost/test');
+db.connect.then(function () {
+  var collection = db.collection('test')
+
+  // can now do;
+  db.test.find({
+    name: 'test'
+  })
+})
 ```
 
 ### Entry Points

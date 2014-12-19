@@ -9,6 +9,7 @@ db = new DB(process.env.MONGODB_URI || 'mongodb://localhost:27017/test')
 before(function () {
   return db.then(function () {
     collection = db.collection('mongodbtest')
+    collection2 = DB.collection(db.raw.collection('mongodbtest2'))
   })
 })
 
