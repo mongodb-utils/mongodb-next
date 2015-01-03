@@ -113,6 +113,14 @@ describe('collection.find()', function () {
   })
 
   it('.count()', function () {
+    return collection.count()
+    .then(function (count) {
+      assert(count)
+      assert('number', typeof count)
+    })
+  })
+
+  it('.find().count()', function () {
     return collection.find().count()
     .then(function (count) {
       assert(count)
