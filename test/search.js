@@ -116,7 +116,7 @@ describe('collection.find()', function () {
     return collection.count()
     .then(function (count) {
       assert(count)
-      assert('number', typeof count)
+      assert.equal('number', typeof count)
     })
   })
 
@@ -124,7 +124,7 @@ describe('collection.find()', function () {
     return collection.find().count()
     .then(function (count) {
       assert(count)
-      assert('number', typeof count)
+      assert.equal('number', typeof count)
     })
   })
 
@@ -132,7 +132,7 @@ describe('collection.find()', function () {
     collection.find().explain().count(function (err, count) {
       assert.ifError(err)
       assert(count)
-      assert('number', typeof count)
+      assert.equal('number', typeof count)
       done()
     })
   })
@@ -166,7 +166,7 @@ describe('collection.find()', function () {
       return collection.find().skip(null).then(function (docs) {
         assert.equal(length, docs.length)
         return collection.find().skip(1).then(function (docs) {
-          assert(length - 1, docs.length)
+          assert.equal(length - 1, docs.length)
         })
       })
     })

@@ -6,7 +6,7 @@ describe('.find().update()', function () {
         asdf: 1
       }
     }).then(function (count) {
-      assert('number', typeof count)
+      assert.equal('number', typeof count)
       return collection.find()
     }).then(function (docs) {
       assert(docs.length > 1)
@@ -20,7 +20,7 @@ describe('.find().update()', function () {
     return collection.find().update('$set', {
       asdf: 2
     }).then(function (count) {
-      assert('number', typeof count)
+      assert.equal('number', typeof count)
       return collection.find()
     }).then(function (docs) {
       assert(docs.length > 1)
@@ -38,7 +38,7 @@ describe('.find().update()', function () {
     }).then(function (docs) {
       assert(docs.length > 1)
       assert(docs.every(function (doc) {
-        return doc.obj = true
+        return doc.obj === true
       }))
     })
   })
