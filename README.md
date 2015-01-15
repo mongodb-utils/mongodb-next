@@ -157,6 +157,7 @@ Only a few methods are available on `collection` itself:
 - `.insert()` - for inserting documents
 - `.remove()` - remove documents, shortcut for `.find().remove()`
 - `.aggregate()` - for aggregations
+- `.mapReduce()` - for mapReduce
 - `.batch()` - to create sequential bulk writes
 - `.parallel()` - to create parallel bulk writes
 
@@ -311,6 +312,47 @@ collection.aggregate()
   }
 })
 .limit(10)
+```
+
+Do a mapReduce:
+
+```js
+collection.mapReduce()
+.map(function () {
+  emit(this.name, this.score)
+})
+.reduce(function (key, values) {
+  return Array.sum(values)
+})
+.then(function (result) {
+  console.log(result)
+})
+```
+
+By default, the `out` is `{ inline: 1 }`, the methods below are available.
+
+- `.out()`
+- `.sort()`
+- `.query()`
+- `.limit()`
+- `.scope()`
+
+```js
+collection.mapReduce()
+.map(function () {
+  emit(this.name, this.score)
+})
+.reduce(function (key, values) {
+  return Array.sum(values)
+})
+.out({
+  merge: 'collectionName'
+})
+.then(function (col) {
+  col.find().then(function (docs) {
+    console.log(docs)
+  })
+})
 ```
 
 Paginate:
