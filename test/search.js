@@ -98,16 +98,15 @@ describe('collection.find()', function () {
 
   it('.explain()', function () {
     return collection.find().explain().then(function (doc) {
-      assert(doc.cursor)
-      assert(doc.n)
+      // compatibility: mongodb 2.x & 3.x
+      assert(doc.cursor || doc.queryPlanner)
     })
   })
 
   it('.explain().exec()', function (done) {
     collection.find().explain().exec(function (err, doc) {
       assert.ifError(err)
-      assert(doc.cursor)
-      assert(doc.n)
+      assert(doc.cursor || doc.queryPlanner)
       done()
     })
   })
